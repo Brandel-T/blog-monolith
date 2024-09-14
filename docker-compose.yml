@@ -1,0 +1,30 @@
+version: "3.1"
+
+services:
+  api:
+    depends_on:
+      - mongodb
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: blog_api
+    networks:
+      backend:
+
+  mongodb:
+    image: mongo:latest
+    restart: always
+    environment:
+      - MONGODB_DATABASE="test"
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo:data/db
+    networks:
+      backend:
+
+volumes:
+  mongo:
+
+networks:
+  backend:
