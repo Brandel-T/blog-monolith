@@ -1,8 +1,6 @@
-import { CreateCommentDto } from '../../../blog/comments/dto/create-comment.dto';
-import { CreateArticleDto } from '../../../blog/articles/dto/create-article.dto';
 import { UserProfile } from '../interfaces/user-profile.interface';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateUserDto {
   @ApiProperty()
@@ -25,8 +23,10 @@ export class CreateUserDto {
   profile: UserProfile;
 
   @ApiProperty()
-  comments?: CreateCommentDto[];
+  @IsArray()
+  comments?: string[];
 
   @ApiProperty()
-  articles?: CreateArticleDto[];
+  @IsArray()
+  articles?: string[];
 }
