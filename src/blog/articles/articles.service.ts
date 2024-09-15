@@ -1,15 +1,15 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { Model } from 'mongoose';
 import { Article } from './schemas/article.schema';
 import { MongooseQueryDto } from '../../common/dto';
-import { Comment } from '../comments/schemas/comment.schema';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class ArticlesService {
   constructor(
-    @Inject('ARTICLE_MODEL') private readonly articleModel: Model<Article>,
+    @InjectModel(Article.name) private readonly articleModel: Model<Article>,
   ) {}
 
   async find(params: MongooseQueryDto<Article>): Promise<Article[]> {
@@ -19,20 +19,6 @@ export class ArticlesService {
   async create(createArticleDto: CreateArticleDto): Promise<Article> {
     return this.articleModel.create(createArticleDto);
   }
-
-  /*
-  async addCommentToArticle(
-    id: string,
-    createCommentDto: CreateCommentDto,
-  ): Promise<Article> {
-    const article = await this.findOne(id);
-    if (!article) {
-      throw new NotFoundException(`Article with id ${id} not found`);
-    }
-
-    article.comments.push(createCommentDto)
-  }
-   */
 
   async findAll(): Promise<Article[]> {
     return this.articleModel.find().exec();

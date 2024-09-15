@@ -2,21 +2,22 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
+import { configuration } from './common/local-config/configuration';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
 
+  const { port, environment } = configuration();
+
   const config = new DocumentBuilder()
-    .setTitle('Blog app - Monolith')
-    .setDescription('Blog API description')
+    .setTitle('BlogApp - Monolith')
+    .setDescription(`Blog API (${environment} environment)`)
     .setVersion('1.0')
-    .addTag('Blogs')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/v1', app, document);
-
-  await app.listen(3000);
+  await app.listen(port);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
 bootstrap();
