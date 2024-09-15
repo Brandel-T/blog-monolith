@@ -1,7 +1,7 @@
-import { FilterQuery, ProjectionType, QueryOptions } from 'mongoose';
+import { ProjectionType, QueryOptions, RootFilterQuery } from 'mongoose';
 
 export interface MongooseQueryDto<T> {
-  filter?: FilterQuery<T>;
+  filter?: RootFilterQuery<T>;
   projection?: ProjectionType<T>;
   options?: QueryOptions<T>;
 }

@@ -31,7 +31,7 @@ export class UsersController {
   @Get(':id')
   @ApiParam({ name: 'id', required: true })
   async findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
+    return this.usersService.findById(id);
   }
 
   @Patch(':id')
