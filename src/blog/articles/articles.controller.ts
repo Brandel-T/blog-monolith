@@ -13,10 +13,12 @@ import { UpdateArticleDto } from './dto/update-article.dto';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CommentsService } from '../comments/comments.service';
 import { CreateCommentDto } from '../comments/dto/create-comment.dto';
-import mongoose from 'mongoose';
+import { NoRolesRequired, Public, Roles } from '../../common/decorators';
+import { Role } from '../../core/users/role.enum';
 
 @Controller('articles')
 @ApiTags('Articles')
+@Roles(Role.AUTHOR, Role.ADMIN)
 export class ArticlesController {
   constructor(
     private readonly articlesService: ArticlesService,
@@ -30,6 +32,8 @@ export class ArticlesController {
   }
 
   @Get()
+  @Public()
+  @NoRolesRequired()
   async findAll() {
     return this.articlesService.findAll();
   }

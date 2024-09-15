@@ -11,6 +11,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { Public } from '../../common/decorators';
 
 @ApiTags('Users')
 @Controller('users')
@@ -19,6 +20,7 @@ export class UsersController {
 
   @Post()
   @ApiBody({ type: CreateUserDto, required: true })
+  @Public()
   async create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
   }

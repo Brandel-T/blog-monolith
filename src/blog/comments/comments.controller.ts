@@ -2,20 +2,19 @@ import { Controller, Get, Body, Patch, Param, Delete } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { NoRolesRequired, Public, Roles } from '../../common/decorators';
+import { Role } from '../../core/users/role.enum';
 
 @Controller('comments')
 @ApiTags('Comments')
+@Roles(Role.AUTHOR, Role.ADMIN)
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
-  /*
-  @Post()
-  create(@Body() createCommentDto: CreateCommentDto) {
-    return this.commentsService.create(createCommentDto);
-  }
-   */
-
   @Get()
+  @Public()
+  // @Roles(Role.USER)
+  @NoRolesRequired()
   findAll() {
     return this.commentsService.findAll();
   }
