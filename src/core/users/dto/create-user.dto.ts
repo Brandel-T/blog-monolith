@@ -14,9 +14,11 @@ export class CreateUserDto {
   password: string;
 
   @ApiProperty()
+  /*
   @IsNotEmpty()
   @IsString()
   @IsEmail()
+   */
   email: string;
 
   @ApiProperty()
@@ -24,9 +26,9 @@ export class CreateUserDto {
 
   @ApiProperty()
   @IsArray()
-  comments?: string[];
+  comments?: string[] = [];
 
   @ApiProperty()
   @IsArray()
-  articles?: string[];
+  articles?: string[] = [];
 }
