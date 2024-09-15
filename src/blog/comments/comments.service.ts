@@ -1,15 +1,16 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 import { Model } from 'mongoose';
 import { Comment } from './schemas/comment.schema';
 import { ArticlesService } from '../articles/articles.service';
 import { MongooseQueryDto } from '../../common/dto';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class CommentsService {
   constructor(
-    @Inject('COMMENT_MODEL') private readonly commentModel: Model<Comment>,
+    @InjectModel(Comment.name) private readonly commentModel: Model<Comment>,
     private readonly articleService: ArticlesService,
   ) {}
 

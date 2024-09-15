@@ -5,14 +5,14 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: development
-    container_name: blog_api_dev
+      target: production
+    container_name: blog_api_prod
     ports:
-      - "3001:3000"
+      - "3002:3000"
     env_file:
-      - .env.development
+      - .env.production
     environment:
-      - NODE_ENV=development
+      - NODE_ENV=production
     depends_on:
       - mongodb
     networks:
@@ -23,9 +23,9 @@ services:
     container_name: blog_mongodb
     restart: always
     ports:
-      - "27018:27017"
+      - "27019:27017"
     volumes:
-      - ./mongo_blog_app_dev:/data/db
+      - ./mongo_blog_app_prod:/data/db
     networks:
       backend:
 
