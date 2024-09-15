@@ -13,7 +13,7 @@ import { UpdateArticleDto } from './dto/update-article.dto';
 import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { CommentsService } from '../comments/comments.service';
 import { CreateCommentDto } from '../comments/dto/create-comment.dto';
-import mongoose from 'mongoose';
+import { NoRolesRequired, Public } from '../../common/decorators';
 
 @Controller('articles')
 @ApiTags('Articles')
@@ -30,6 +30,8 @@ export class ArticlesController {
   }
 
   @Get()
+  @Public()
+  @NoRolesRequired()
   async findAll() {
     return this.articlesService.findAll();
   }

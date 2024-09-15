@@ -1,6 +1,7 @@
 import { UserProfile } from '../interfaces/user-profile.interface';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsArray, IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, IsString } from 'class-validator';
+import { Role } from '../role.enum';
 
 export class CreateUserDto {
   @ApiProperty()
@@ -31,4 +32,12 @@ export class CreateUserDto {
   @ApiProperty()
   @IsArray()
   articles?: string[] = [];
+
+  @ApiProperty({
+    type: String,
+    default: Role.USER,
+    enum: [Role.USER, Role.ADMIN, Role.AUTHOR],
+    description: "List of user's roles",
+  })
+  roles: string[] = [Role.USER];
 }

@@ -7,15 +7,20 @@ import { CommonModule } from './common/common.module';
 import { DatabaseModule } from './database/database.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthGuard } from './common/guards/auth/auth.guard';
+import { RolesGuard } from './common/guards/roles/roles.guard';
 
 @Module({
-  imports: [CoreModule, BlogModule, CommonModule, DatabaseModule],
+  imports: [DatabaseModule, CoreModule, BlogModule, CommonModule],
   controllers: [AppController],
   providers: [
     AppService,
     {
       provide: APP_GUARD,
       useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })
