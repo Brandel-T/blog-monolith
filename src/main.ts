@@ -7,6 +7,7 @@ import { configuration } from './common/local-config/configuration';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.useGlobalPipes(new ValidationPipe());
+  app.setGlobalPrefix('api/v1');
 
   const { port, environment } = configuration();
 
